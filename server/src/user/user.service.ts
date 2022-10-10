@@ -13,7 +13,7 @@ export class UserService {
 
   login = async (data: UserDTO): Promise<UserSO> => {
     const { email, password } = data;
-    const user = await this.userRepository.findOne({ email });
+    const user = await this.userRepository.findOne({ where: { email } });
     if (!user || !(await user.comparePassword(password))) {
       throw new HttpException(
         'Invalid email or password',
@@ -25,7 +25,7 @@ export class UserService {
 
   register = async (data: UserDTO): Promise<UserSO> => {
     const { email } = data;
-    let user = await this.userRepository.findOne({ email });
+    let user = await this.userRepository.findOne({ where: { email } });
     if (user) {
       throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
     } else {
