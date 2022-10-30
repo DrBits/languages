@@ -1,15 +1,5 @@
-import { CSSProperties, ReactNode } from 'react';
 import styled from '@emotion/styled';
-import { UITheme } from '../../theme';
-
-type StackProps = {
-  gap?: keyof UITheme['space'];
-  direction?: 'row' | 'column';
-  alignItems?: CSSProperties['alignItems'];
-  justifyContent?: CSSProperties['justifyContent'];
-  className?: string;
-  children: ReactNode;
-};
+import { StackProps } from './types';
 
 const Stack = styled('div', {
   shouldForwardProp: (prop) =>

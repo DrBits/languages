@@ -63,7 +63,7 @@ const extendTheme = ({
 }: {
   baseTheme?: UITheme;
   extendedTheme: RecursivePartial<UITheme>;
-}) => deepmerge(baseTheme, extendTheme) as UITheme;
+}) => deepmerge(baseTheme, extendedTheme) as UITheme;
 
 const lightTheme: UITheme = theme;
 
