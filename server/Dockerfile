@@ -13,8 +13,6 @@ WORKDIR /app
 
 COPY --from=build /app/build /app/
 COPY package.json /app/package.json
-COPY ormconfig.json /app/ormconfig.json
-COPY wait-for-it.sh /app/wait-for-it.sh
 
 RUN npm install --silent
 RUN apk add --no-cache bash

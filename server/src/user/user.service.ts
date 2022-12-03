@@ -1,44 +1,60 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { sign } from 'jsonwebtoken';
+import { compare } from 'bcryptjs';
+
+import { JWT_SECRET } from '@app/config';
+
+import { CreateUserDto } from './dto/createUser.dto';
+import { LoginUserDto } from './dto/loginUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
+
 import { UserEntity } from './user.entity';
-import { UserDTO, UserSO } from './user.dto';
+
+import { UserResponseInterface } from './types/userResponse.interface';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
+  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const errorResponse = {
+      errors: {},
+    };
+    const userByEmail = await this.userRepository.findOne({
+      email: createUserDto.email,
+    });
+    const userByUsername = await this.userRepository.findOne({
+      username: createUserDto.username,
+    });
 
-  login = async (data: UserDTO): Promise<UserSO> => {
-    const { email, password } = data;
-    const user = await this.userRepository.findOne({ where: { email } });
-    if (!user || !(await user.comparePassword(password))) {
-      throw new HttpException(
-        'Invalid email or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+    if (userByEmail) {
+      errorResponse.errors['email'] = 'has already been taken';
     }
-    return user.sanitizeObject({ withToken: true });
-  };
 
-  register = async (data: UserDTO): Promise<UserSO> => {
-    const { email } = data;
-    let user = await this.userRepository.findOne({ where: { email } });
-    if (user) {
-      throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
-    } else {
-      user = await this.userRepository.create(data);
-      await this.userRepository.save(user);
-      return user.sanitizeObject({ withToken: true });
+    if (userByUsername) {
+      errorResponse.errors['username'] = 'has already been taken';
     }
-  };
 
-  getProfile = async (email: string): Promise<any> => {
-    const user = await this.userRepository.findOne({ where: { email } });
-    if (!user)
-      throw new HttpException('Email does not exists', HttpStatus.NOT_FOUND);
-    return user.sanitizeObject({ withToken: true });
-  };
+    if (userByEmail || userByUsername) {
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    const newUser = new UserEntity();
+    Object.assign(newUser, createUserDto);
+
+    return await this.userRepository.save(newUser);
+  }
+
+  buildUserResponse(user: UserEntity): UserResponseInterface {
+    return {
+      user: {
+        ...user,
+        token: 'some_token',
+      },
+    };
+  }
 }

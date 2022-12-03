@@ -204,7 +204,7 @@ export default {
   },
   typography: {
     body: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '16px',
       fontWeight: 'Regular',
       letterSpacing: '0',
@@ -215,7 +215,7 @@ export default {
       weight: '400'
     },
     bodySmall: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '14px',
       fontWeight: 'Regular',
       letterSpacing: '0',
@@ -226,7 +226,7 @@ export default {
       weight: '400'
     },
     bodySmallStrong: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '14px',
       fontWeight: 'Medium',
       letterSpacing: '0',
@@ -237,7 +237,7 @@ export default {
       weight: '500'
     },
     bodySmallStronger: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '14px',
       fontWeight: 'SemiBold',
       letterSpacing: '0',
@@ -248,7 +248,7 @@ export default {
       weight: '600'
     },
     bodyStrong: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '16px',
       fontWeight: 'Medium',
       letterSpacing: '0',
@@ -259,7 +259,7 @@ export default {
       weight: '500'
     },
     bodyStronger: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '16px',
       fontWeight: 'SemiBold',
       letterSpacing: '0',
@@ -270,7 +270,7 @@ export default {
       weight: '600'
     },
     caption: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '12px',
       fontWeight: 'Medium',
       letterSpacing: '0',
@@ -281,7 +281,7 @@ export default {
       weight: '500'
     },
     captionSmall: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '10px',
       fontWeight: 'Medium',
       letterSpacing: '0',
@@ -303,7 +303,7 @@ export default {
       weight: '400'
     },
     heading: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '25px',
       fontWeight: 'Regular',
       letterSpacing: '0',
@@ -314,7 +314,7 @@ export default {
       weight: '400'
     },
     headingLarge: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '35px',
       fontWeight: 'Regular',
       letterSpacing: '0',
@@ -325,7 +325,7 @@ export default {
       weight: '400'
     },
     headingSmall: {
-      fontFamily: 'Asap',
+      fontFamily: 'Open Sans, sans-serif',
       fontSize: '21px',
       fontWeight: 'Medium',
       letterSpacing: '0',

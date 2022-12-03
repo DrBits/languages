@@ -18,6 +18,7 @@ import Expandable from '../Expandable';
 import Icon from '../Icon';
 import Separator from '../Separator';
 import Text from '../Separator';
+import Button from '../Button';
 
 import randomName from '../../helpers/random-name';
 import {
