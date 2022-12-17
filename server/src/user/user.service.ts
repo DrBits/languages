@@ -49,11 +49,66 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
+  async findById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne(id);
+  }
+
+  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+    const errorResponse = {
+      errors: {
+        email: 'is invalid',
+        password: 'is invalid',
+      },
+    };
+
+    const user = await this.userRepository.findOne(
+      {
+        email: loginUserDto.email,
+      },
+      {
+        select: ['id', 'username', 'email', 'bio', 'image', 'password'],
+      },
+    );
+
+    if (!user) {
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    const isPasswordCorrect = await compare(
+      loginUserDto.password,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) {
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    delete user.password;
+    return user;
+  }
+
+  async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    const user = await this.findById(userId);
+    Object.assign(user, updateUserDto);
+
+    return await this.userRepository.save(user);
+  }
+
+  generateJwt(user: UserEntity): string {
+    return sign(
+      { id: user.id, username: user.username, email: user.email },
+      JWT_SECRET,
+    );
+  }
+
   buildUserResponse(user: UserEntity): UserResponseInterface {
     return {
       user: {
         ...user,
-        token: 'some_token',
+        token: this.generateJwt(user),
       },
     };
   }

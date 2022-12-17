@@ -15,5 +15,6 @@ export { default as Notice } from './Notice';
 export { default as Separator } from './Separator';
 export { default as Stack } from './Stack';
 export { default as Text } from './Text';
+export { default as TextBox } from './TextBox';
 export { default as Tooltip } from './Tooltip';
 export { default as Select } from './Select';
