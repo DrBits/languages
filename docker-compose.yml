@@ -6,6 +6,9 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+    networks:
+      - webapp
+      - database
     depends_on:
       - postgres_db
     environment:
@@ -19,6 +22,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    networks:
+      - webapp
     ports:
       - 80:80
     restart: always
@@ -27,6 +32,8 @@ services:
   ## POSTGRES ##
   postgres_db:
     image: postgres:14.6-alpine
+    networks:
+      - database
     ports:
       - '5432:5432'
     environment:
@@ -40,3 +47,9 @@ services:
 
 volumes:
   docker-nest-postgres:
+
+networks:
+  webapp:
+    driver: bridge
+  database:
+    driver: bridge
